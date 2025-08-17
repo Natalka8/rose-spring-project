@@ -25,13 +25,13 @@ public class GameServlet extends HttpServlet {
         String choice = request.getParameter("choice");
 
         if (step == null) {
-            // Начать новую игру
+            // Start a new game
             session.setAttribute("gameState", "start");
             request.setAttribute("message", "Вы просыпаетесь в темном лесу. Перед вами две тропинки.");
             request.setAttribute("option1", "Пойти налево");
             request.setAttribute("option2", "Пойти направо");
         } else {
-            // Обработка логики игры
+            // Game Logic Processing
             String gameState = (String) session.getAttribute("gameState");
             String nextStep = processGameStep(gameState, choice);
             session.setAttribute("gameState", nextStep);
