@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Текстовый квест</h1>
-<p>Добро пожаловать, ${user.username}!</p>
+<p>Добро пожаловать ${user.username}!</p>
 <p>Сыграно игр: ${user.gamesPlayed}</p>
 <hr>
 
