@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг и утилиты - Rose Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .utils-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+
+        .status-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .status-header h2 {
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .status-indicator {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-up {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-down {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-content {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .status-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .status-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .status-item h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-item p {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .status-up .status-item p {
+            color: #28a745;
+        }
+
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .json-key {
+            color: #d73a49;
+        }
+
+        .json-string {
+            color: #032f62;
+        }
+
+        .json-number {
+            color: #005cc5;
+        }
+
+        .json-boolean {
+            color: #6f42c1;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .refresh-btn {
+            background: #17a2b8;
+            margin-left: 10px;
+        }
+
+        .refresh-btn:hover {
+            background: #138496;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .utils-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🚀 Мониторинг и утилиты</h1>
+        <p>Rose Application - Панель управления и мониторинга системы</p>
+    </div>
+
+    <div class="utils-grid">
+        <!-- Health Check Card -->
+        <div class="card">
+            <div class="card-icon">🩺</div>
+            <h3>Health Check</h3>
+            <p>Проверка состояния системы, БД и компонентов приложения</p>
+            <a href="/actuator/health" class="btn" target="_blank">
+                Открыть Health Check
+            </a>
+        </div>
+
+        <!-- System Info Card -->
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>System Info</h3>
+            <p>Информация о приложении, версии, сборке и окружении</p>
+            <a href="/actuator/info" class="btn btn-secondary" target="_blank">
+                Открыть System Info
+            </a>
+        </div>
+
+        <!-- Database Info Card -->
+        <div class="card">
+            <div class="card-icon">🗃️</div>
+            <h3>Database Info</h3>
+            <p>Информация о подключении к MySQL базе данных</p>
+            <a href="/db/info" class="btn btn-success" id="dbLink">
+                Информация о БД
+            </a>
+            <div style="margin-top: 15px;">
+                <small id="dbStatus">Определение типа БД...</small>
+            </div>
+        </div>
+
+        <!-- Additional Monitoring Cards -->
+        <div class="card">
+            <div class="card-icon">📈</div>
+            <h3>Metrics</h3>
+            <p>Метрики приложения, производительность и статистика</p>
+            <a href="/actuator/metrics" class="btn" target="_blank">
+                Открыть Metrics
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔧</div>
+            <h3>Environment</h3>
+            <p>Переменные окружения и конфигурация приложения</p>
+            <a href="/actuator/env" class="btn" target="_blank">
+                Открыть Environment
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🗺️</div>
+            <h3>URL Mappings</h3>
+            <p>Все доступные эндпоинты и маршруты приложения</p>
+            <a href="/actuator/mappings" class="btn" target="_blank">
+                Открыть Mappings
+            </a>
+        </div>
+    </div>
+
+    <!-- Status Panel -->
+    <div class="status-panel">
+        <div class="status-header">
+            <h2>Текущий статус системы</h2>
+            <div>
+                <span class="status-indicator status-up" id="globalStatus">UP</span>
+                <button class="btn refresh-btn" onclick="loadHealthStatus()">🔄 Обновить</button>
+            </div>
+        </div>
+
+        <div class="status-details" id="statusDetails">
+            <!-- Динамически заполнится JavaScript -->
+        </div>
+
+        <div class="status-content">
+            <h3 style="margin-bottom: 15px; color: #333;">Детальная информация:</h3>
+            <pre id="healthStatus">Загрузка данных о состоянии системы...</pre>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Rose Application Monitoring Dashboard | Версия 1.0.0</p>
+        <p style="margin-top: 5px; font-size: 0.8rem; color: #888;">
+            Все системы работают в штатном режиме
+        </p>
+    </div>
+</div>
+
+<script>
+    // Функция для подсветки JSON
+    function syntaxHighlight(json) {
+        if (!json) return '';
+
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+            function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+    }
+
+    // Загрузка статуса health check
+    async function loadHealthStatus() {
+        try {
+            const response = await fetch('/actuator/health');
+            const data = await response.json();
+
+            // Обновляем глобальный статус
+            const globalStatus = document.getElementById('globalStatus');
+            globalStatus.textContent = data.status.toUpperCase();
+            globalStatus.className = `status-indicator status-${data.status.toLowerCase()}`;
+
+            // Обновляем детали статуса
+            const statusDetails = document.getElementById('statusDetails');
+            if (data.components) {
+                let detailsHTML = '';
+
+                for (const [key, component] of Object.entries(data.components)) {
+                    if (component.status) {
+                        detailsHTML += `
+                                <div class="status-item">
+                                    <h4>${key}</h4>
+                                    <p class="status-${component.status.toLowerCase()}">
+                                        ${component.status.toUpperCase()}
+                                    </p>
+                                </div>
+                            `;
+                    }
+                }
+                statusDetails.innerHTML = detailsHTML;
+            }
+
+            // Показываем полный JSON с подсветкой
+            const healthStatus = document.getElementById('healthStatus');
+            healthStatus.innerHTML = syntaxHighlight(JSON.stringify(data, null, 2));
+
+        } catch (error) {
+            console.error('Error loading health status:', error);
+            document.getElementById('healthStatus').textContent =
+                'Ошибка при загрузке данных: ' + error.message;
+            document.getElementById('globalStatus').textContent = 'ERROR';
+            document.getElementById('globalStatus').className = 'status-indicator status-down';
+        }
+    }
+
+    // Определяем тип базы данных и обновляем ссылку
+    async function detectDatabaseType() {
+        try {
+            const response = await fetch('/actuator/health');
+            const data = await response.json();
+
+            const dbLink = document.getElementById('dbLink');
+            const dbStatus = document.getElementById('dbStatus');
+
+            if (data.components && data.components.database) {
+                const dbType = data.components.database.details?.database || 'Unknown';
+                const dbMessage = data.components.database.details?.message || '';
+
+                if (dbType === 'MySQL') {
+                    dbLink.href = '/actuator/health';
+                    dbLink.innerHTML = 'Проверить MySQL';
+                    dbStatus.textContent = `Используется ${dbType}`;
+                    dbStatus.style.color = '#28a745';
+                } else if (dbType === 'H2') {
+                    dbLink.href = '/h2-console';
+                    dbLink.innerHTML = 'Открыть H2 Console';
+                    dbStatus.textContent = `Используется ${dbType} (DEV)`;
+                    dbStatus.style.color = '#17a2b8';
+                } else {
+                    dbLink.href = '#';
+                    dbLink.innerHTML = 'Информация о БД';
+                    dbStatus.textContent = `Тип БД: ${dbType}`;
+                }
+            }
+        } catch (error) {
+            console.error('Error detecting database:', error);
+        }
+    }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        loadHealthStatus();
+        detectDatabaseType();
+
+        // Автообновление каждые 30 секунд
+        setInterval(loadHealthStatus, 30000);
+    });
+
+    // Обработчик для ссылок, которые могут не существовать
+    document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
+            e.preventDefault();
+            alert('Данная функция временно недоступна');
+        }
+    });
+</script>
+</body>
+</html>

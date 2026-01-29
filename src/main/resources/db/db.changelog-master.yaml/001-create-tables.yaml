@@ -1,0 +1,712 @@
+databaseChangeLog:
+  # ========== USERS TABLE (users) ==========
+  - changeSet:
+      id: 001-create-users-table
+      author: developer
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              # ========== AUTHENTICATION ==========
+              - column:
+                  name: username
+                  type: VARCHAR(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+
+              # ========== GAME CHARACTERISTICS ==========
+              - column:
+                  name: level
+                  type: INT
+                  defaultValueNumeric: 1
+              - column:
+                  name: experience
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: total_experience
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: gold
+                  type: INT
+                  defaultValueNumeric: 100
+              - column:
+                  name: diamonds
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: health
+                  type: INT
+                  defaultValueNumeric: 100
+              - column:
+                  name: max_health
+                  type: INT
+                  defaultValueNumeric: 100
+              - column:
+                  name: mana
+                  type: INT
+                  defaultValueNumeric: 50
+              - column:
+                  name: max_mana
+                  type: INT
+                  defaultValueNumeric: 50
+              - column:
+                  name: stamina
+                  type: INT
+                  defaultValueNumeric: 100
+              - column:
+                  name: max_stamina
+                  type: INT
+                  defaultValueNumeric: 100
+
+              # ========== COMBAT CHARACTERISTICS ==========
+              - column:
+                  name: attack_power
+                  type: INT
+                  defaultValueNumeric: 10
+              - column:
+                  name: magic_power
+                  type: INT
+                  defaultValueNumeric: 5
+              - column:
+                  name: defense
+                  type: INT
+                  defaultValueNumeric: 5
+              - column:
+                  name: magic_defense
+                  type: INT
+                  defaultValueNumeric: 3
+              - column:
+                  name: accuracy
+                  type: INT
+                  defaultValueNumeric: 80
+              - column:
+                  name: dodge
+                  type: INT
+                  defaultValueNumeric: 10
+              - column:
+                  name: critical_chance
+                  type: INT
+                  defaultValueNumeric: 5
+              - column:
+                  name: critical_damage
+                  type: INT
+                  defaultValueNumeric: 150
+
+              # ========== CHARACTER CHARACTERISTICS ==========
+              - column:
+                  name: character_class
+                  type: VARCHAR(50)
+                  defaultValue: WARRIOR
+              - column:
+                  name: race
+                  type: VARCHAR(50)
+                  defaultValue: HUMAN
+              - column:
+                  name: faction
+                  type: VARCHAR(50)
+                  defaultValue: NEUTRAL
+              - column:
+                  name: strength
+                  type: INT
+                  defaultValueNumeric: 10
+              - column:
+                  name: agility
+                  type: INT
+                  defaultValueNumeric: 10
+              - column:
+                  name: intelligence
+                  type: INT
+                  defaultValueNumeric: 10
+              - column:
+                  name: vitality
+                  type: INT
+                  defaultValueNumeric: 10
+              - column:
+                  name: luck
+                  type: INT
+                  defaultValueNumeric: 5
+
+              # ========== STATISTICS ==========
+              - column:
+                  name: total_kills
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: total_deaths
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: total_assists
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: total_quests_completed
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: total_achievements
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: play_time_hours
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: total_logins
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: current_streak
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: longest_streak
+                  type: INT
+                  defaultValueNumeric: 0
+
+              # ========== LOCATION ==========
+              - column:
+                  name: current_location
+                  type: VARCHAR(100)
+                  defaultValue: STARTING_AREA
+              - column:
+                  name: current_zone
+                  type: VARCHAR(100)
+                  defaultValue: FOREST_OF_BEGINNINGS
+              - column:
+                  name: world_map_progress
+                  type: TEXT
+              - column:
+                  name: unlocked_locations
+                  type: TEXT
+
+              # ========== INVENTORY ==========
+              - column:
+                  name: inventory_slots
+                  type: INT
+                  defaultValueNumeric: 20
+              - column:
+                  name: equipment_slots
+                  type: INT
+                  defaultValueNumeric: 10
+              - column:
+                  name: equipped_items
+                  type: TEXT
+              - column:
+                  name: inventory_items
+                  type: TEXT
+              - column:
+                  name: bank_items
+                  type: TEXT
+              - column:
+                  name: settings
+                  type: TEXT
+              - column:
+                  name: key_bindings
+                  type: TEXT
+
+              # ========== SOCIAL ==========
+              - column:
+                  name: guild_id
+                  type: BIGINT
+              - column:
+                  name: guild_role
+                  type: VARCHAR(50)
+              - column:
+                  name: friends_list
+                  type: TEXT
+              - column:
+                  name: ignore_list
+                  type: TEXT
+
+              # ========== TIMESTAMPS ==========
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: last_login
+                  type: TIMESTAMP
+              - column:
+                  name: last_logout
+                  type: TIMESTAMP
+              - column:
+                  name: last_activity
+                  type: TIMESTAMP
+              - column:
+                  name: daily_reward_claimed
+                  type: TIMESTAMP
+
+              # ========== OTHER FIELDS ==========
+              - column:
+                  name: title
+                  type: VARCHAR(100)
+              - column:
+                  name: badge
+                  type: VARCHAR(100)
+              - column:
+                  name: reputation
+                  type: TEXT
+              - column:
+                  name: skills
+                  type: TEXT
+              - column:
+                  name: abilities
+                  type: TEXT
+              - column:
+                  name: mounts
+                  type: TEXT
+              - column:
+                  name: pets
+                  type: TEXT
+              - column:
+                  name: cosmetics
+                  type: TEXT
+
+        # INDEXES for users table
+        - createIndex:
+            tableName: users
+            indexName: idx_users_username
+            columns:
+              - column:
+                  name: username
+        - createIndex:
+            tableName: users
+            indexName: idx_users_email
+            columns:
+              - column:
+                  name: email
+        - createIndex:
+            tableName: users
+            indexName: idx_users_level
+            columns:
+              - column:
+                  name: level
+        - createIndex:
+            tableName: users
+            indexName: idx_users_guild_id
+            columns:
+              - column:
+                  name: guild_id
+        - createIndex:
+            tableName: users
+            indexName: idx_users_last_login
+            columns:
+              - column:
+                  name: last_login
+
+  # ========== USER ACHIEVEMENTS TABLE (user_achievements) ==========
+  - changeSet:
+      id: 001-create-user_achievements-table
+      author: developer
+      changes:
+        - createTable:
+            tableName: user_achievements
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_achievements_user
+                    referencedTableName: users
+                    referencedColumnNames: id
+                    deleteCascade: true
+              - column:
+                  name: achievement_code
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: achievement_name
+                  type: VARCHAR(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: achievement_type
+                  type: VARCHAR(50)
+              - column:
+                  name: rarity
+                  type: VARCHAR(20)
+              - column:
+                  name: difficulty
+                  type: VARCHAR(20)
+              - column:
+                  name: points
+                  type: INT
+              - column:
+                  name: progress
+                  type: INT
+              - column:
+                  name: target_value
+                  type: INT
+              - column:
+                  name: current_value
+                  type: INT
+              - column:
+                  name: is_completed
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: is_hidden
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: unlocked_at
+                  type: TIMESTAMP
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: repeat_count
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: image_url
+                  type: VARCHAR(500)
+              - column:
+                  name: reward
+                  type: TEXT
+              - column:
+                  name: category
+                  type: VARCHAR(100)
+              - column:
+                  name: subcategory
+                  type: VARCHAR(100)
+              - column:
+                  name: achievement_level
+                  type: INT
+                  defaultValueNumeric: 1
+              - column:
+                  name: achievement_template_id
+                  type: BIGINT
+
+        # INDEXES for user_achievements
+        - createIndex:
+            tableName: user_achievements
+            indexName: idx_user_achievements_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: user_achievements
+            indexName: idx_user_achievements_code
+            columns:
+              - column:
+                  name: achievement_code
+        - createIndex:
+            tableName: user_achievements
+            indexName: idx_user_achievements_completed
+            columns:
+              - column:
+                  name: is_completed
+        - createIndex:
+            tableName: user_achievements
+            indexName: idx_user_achievements_user_code
+            columns:
+              - column:
+                  name: user_id
+              - column:
+                  name: achievement_code
+
+  # ========== ACHIEVEMENT TEMPLATES TABLE (achievement_templates) ==========
+  - changeSet:
+      id: 001-create-achievement_templates-table
+      author: developer
+      changes:
+        - createTable:
+            tableName: achievement_templates
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: code
+                  type: VARCHAR(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+              - column:
+                  name: rarity
+                  type: VARCHAR(20)
+              - column:
+                  name: difficulty
+                  type: VARCHAR(20)
+              - column:
+                  name: points
+                  type: INT
+              - column:
+                  name: target_value
+                  type: INT
+              - column:
+                  name: is_hidden
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: image_url
+                  type: VARCHAR(500)
+              - column:
+                  name: reward
+                  type: TEXT
+              - column:
+                  name: category
+                  type: VARCHAR(100)
+              - column:
+                  name: subcategory
+                  type: VARCHAR(100)
+              - column:
+                  name: max_level
+                  type: INT
+                  defaultValueNumeric: 1
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+  # ========== FOREIGN KEYS ==========
+  - changeSet:
+      id: 001-add-foreign-keys
+      author: developer
+      changes:
+        # Foreign key from user_achievements to achievement_templates
+        - addForeignKeyConstraint:
+            baseTableName: user_achievements
+            baseColumnNames: achievement_template_id
+            referencedTableName: achievement_templates
+            referencedColumnNames: id
+            constraintName: fk_user_achievements_template
+            onDelete: SET NULL
+            onUpdate: CASCADE
+
+        # Foreign key from user_achievements to users
+        - addForeignKeyConstraint:
+            baseTableName: user_achievements
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_user_achievements_user
+            onDelete: CASCADE
+            onUpdate: CASCADE
+
+  # ========== GAME SESSIONS TABLE (game_sessions) ==========
+  - changeSet:
+      id: 001-create-game_sessions-table
+      author: developer
+      changes:
+        - createTable:
+            tableName: game_sessions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_game_sessions_user
+                    referencedTableName: users
+                    referencedColumnNames: id
+              - column:
+                  name: session_start
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: session_end
+                  type: TIMESTAMP
+              - column:
+                  name: duration_minutes
+                  type: INT
+              - column:
+                  name: location_start
+                  type: VARCHAR(100)
+              - column:
+                  name: location_end
+                  type: VARCHAR(100)
+              - column:
+                  name: exp_gained
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: gold_gained
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: kills
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: deaths
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: quests_completed
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: achievements_unlocked
+                  type: INT
+                  defaultValueNumeric: 0
+
+        - createIndex:
+            tableName: game_sessions
+            indexName: idx_game_sessions_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: game_sessions
+            indexName: idx_game_sessions_session_start
+            columns:
+              - column:
+                  name: session_start
+
+  # ========== GAME ACTIONS TABLE (game_actions) ==========
+  - changeSet:
+      id: 001-create-game_actions-table
+      author: developer
+      changes:
+        - createTable:
+            tableName: game_actions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: session_id
+                  type: BIGINT
+              - column:
+                  name: action_type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: action_subtype
+                  type: VARCHAR(50)
+              - column:
+                  name: target_id
+                  type: BIGINT
+              - column:
+                  name: target_type
+                  type: VARCHAR(50)
+              - column:
+                  name: value_before
+                  type: VARCHAR(255)
+              - column:
+                  name: value_after
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: location
+                  type: VARCHAR(100)
+              - column:
+                  name: timestamp
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createIndex:
+            tableName: game_actions
+            indexName: idx_game_actions_user_id
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            tableName: game_actions
+            indexName: idx_game_actions_session_id
+            columns:
+              - column:
+                  name: session_id
+        - createIndex:
+            tableName: game_actions
+            indexName: idx_game_actions_timestamp
+            columns:
+              - column:
+                  name: timestamp
+        - createIndex:
+            tableName: game_actions
+            indexName: idx_game_actions_type
+            columns:
+              - column:
+                  name: action_type

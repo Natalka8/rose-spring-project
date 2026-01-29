@@ -1,0 +1,220 @@
+databaseChangeLog:
+  # ========== INSERT ACHIEVEMENT TEMPLATES ==========
+  - changeSet:
+      id: 002-insert-achievement-templates
+      author: developer
+      changes:
+        # Combat achievements
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "first_kill"
+              name: "Первая кровь"
+              description: "Убейте своего первого врага"
+              type: "COMBAT"
+              rarity: "COMMON"
+              difficulty: "EASY"
+              points: 10
+              target_value: 1
+              is_hidden: false
+              category: "Боевые"
+              subcategory: "Убийства"
+
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "kills_10"
+              name: "Новичок в бою"
+              description: "Убейте 10 врагов"
+              type: "COMBAT"
+              rarity: "COMMON"
+              difficulty: "EASY"
+              points: 50
+              target_value: 10
+              is_hidden: false
+              category: "Боевые"
+              subcategory: "Убийства"
+
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "kills_100"
+              name: "Опытный боец"
+              description: "Убейте 100 врагов"
+              type: "COMBAT"
+              rarity: "UNCOMMON"
+              difficulty: "MEDIUM"
+              points: 200
+              target_value: 100
+              is_hidden: false
+              category: "Боевые"
+              subcategory: "Убийства"
+
+        # Exploration achievements
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "first_location"
+              name: "Первые шаги"
+              description: "Посетите первую локацию"
+              type: "EXPLORATION"
+              rarity: "COMMON"
+              difficulty: "EASY"
+              points: 10
+              target_value: 1
+              is_hidden: false
+              category: "Исследование"
+              subcategory: "Локации"
+
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "locations_5"
+              name: "Путешественник"
+              description: "Посетите 5 разных локаций"
+              type: "EXPLORATION"
+              rarity: "COMMON"
+              difficulty: "EASY"
+              points: 50
+              target_value: 5
+              is_hidden: false
+              category: "Исследование"
+              subcategory: "Локации"
+
+        # Quest achievements
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "first_quest"
+              name: "Первый квест"
+              description: "Выполните первый квест"
+              type: "QUEST"
+              rarity: "COMMON"
+              difficulty: "EASY"
+              points: 20
+              target_value: 1
+              is_hidden: false
+              category: "Квесты"
+              subcategory: "Выполнение"
+
+        # Progression achievements
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "level_5"
+              name: "Новичок"
+              description: "Достигните 5 уровня"
+              type: "PROGRESSION"
+              rarity: "COMMON"
+              difficulty: "EASY"
+              points: 100
+              target_value: 5
+              is_hidden: false
+              category: "Прогресс"
+              subcategory: "Уровни"
+
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "level_10"
+              name: "Ученик"
+              description: "Достигните 10 уровня"
+              type: "PROGRESSION"
+              rarity: "UNCOMMON"
+              difficulty: "MEDIUM"
+              points: 300
+              target_value: 10
+              is_hidden: false
+              category: "Прогресс"
+              subcategory: "Уровни"
+
+        # Social achievements
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "first_login"
+              name: "Добро пожаловать"
+              description: "Войдите в игру в первый раз"
+              type: "SOCIAL"
+              rarity: "COMMON"
+              difficulty: "EASY"
+              points: 5
+              target_value: 1
+              is_hidden: false
+              category: "Социальные"
+              subcategory: "Активность"
+
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "login_streak_7"
+              name: "Преданный игрок"
+              description: "Входите в игру 7 дней подряд"
+              type: "SOCIAL"
+              rarity: "RARE"
+              difficulty: "MEDIUM"
+              points: 500
+              target_value: 7
+              is_hidden: false
+              category: "Социальные"
+              subcategory: "Активность"
+
+        # Collection achievements
+        - insert:
+            tableName: achievement_templates
+            columns:
+              code: "gold_1000"
+              name: "Начинающий торговец"
+              description: "Накопите 1000 золота"
+              type: "COLLECTION"
+              rarity: "COMMON"
+              difficulty: "EASY"
+              points: 100
+              target_value: 1000
+              is_hidden: false
+              category: "Коллекция"
+              subcategory: "Ресурсы"
+
+  # ========== INSERT TEST USERS (optional) ==========
+  - changeSet:
+      id: 002-insert-test-users
+      author: developer
+      context: test, dev
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              username: "test_warrior"
+              email: "warrior@test.com"
+              password: "$2a$10$YourHashedPasswordHere" # password: warrior123
+              character_class: "WARRIOR"
+              race: "HUMAN"
+              level: 5
+              gold: 500
+              health: 120
+              max_health: 120
+
+        - insert:
+            tableName: users
+            columns:
+              username: "test_mage"
+              email: "mage@test.com"
+              password: "$2a$10$YourHashedPasswordHere" # password: mage123
+              character_class: "MAGE"
+              race: "ELF"
+              level: 8
+              gold: 800
+              mana: 100
+              max_mana: 100
+
+        - insert:
+            tableName: users
+            columns:
+              username: "test_archer"
+              email: "archer@test.com"
+              password: "$2a$10$YourHashedPasswordHere" # password: archer123
+              character_class: "ARCHER"
+              race: "ELF"
+              level: 3
+              gold: 300
+              accuracy: 90
